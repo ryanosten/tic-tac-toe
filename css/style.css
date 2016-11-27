@@ -138,4 +138,8 @@ h1 {
       background-color: #3688C3;
       background-image: url(../img/x.svg); }
 
+.hide {
+  display: none;
+}
+
 
