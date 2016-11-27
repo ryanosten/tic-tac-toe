@@ -41,6 +41,8 @@ $(document).ready(function(){
 				console.log('win7')
 			} else if(board[2] === board[4] && board[4] === board[6] && board[2] !== 0) {
 				console.log('win8')
+			} else if(moves === 9){
+				console.log('tie') 
 			}
 	}
 
@@ -89,11 +91,11 @@ $(document).ready(function(){
 			//change turn to 'x' turn
 			turn = 2;
 
+			//increment the moves variable
 			moves++
 
+			//check for a win or tie
 			checkWin();
-
-			console.log(board);
 		
 		//if it is 'x' turn, and box not claimed then...
 		} else if(turn === 2 && board[boxClicked] === 0){
@@ -110,13 +112,11 @@ $(document).ready(function(){
 			//change turn to 'o' turn
 			turn = 1;
 
+			//increment the moves variable	
 			moves++
 
+			//check for a win or tie
 			checkWin();
 		}
-	
-		//check for win...
-	
-
 	});
 })
