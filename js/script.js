@@ -3,6 +3,13 @@ $(document).ready(function(){
 	//track state of board. 0 = box has not been claimed by a player. 1 = box claimed by 'o'. 2 = box claimed by 'x'.
 	var board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+	var winView = '<div class="screen screen-win" id="finish">';
+		winView +='<header>';
+		winView += '<h1>Tic Tac Toe</h1>';
+		winView += '<p class="message"></p>';
+		winView += '<a href="#" class="button">New game</a>';
+		winView += '</header></div>';
+
 	//click handler on 'start game' button. If clicked, then start game!
 	$('.screen-start .button').on('click', function(){
 		//hide the start screen
@@ -23,6 +30,16 @@ $(document).ready(function(){
 		$(playerGo).addClass('active');
 	}
 
+  	function displayWinner(boxCheck, winX, winO){
+  		if(board[boxCheck] === 1){
+  			$('.screen-win').removeClass(winX);
+			$('.screen-win').addClass(winO);
+  		} else {
+  			$('.screen-win').removeClass(winO);
+			$('.screen-win').addClass(winX);
+  		}
+  	}
+
 	function checkWin(){
 
 			if(board[0] === board[1] && board[1] === board[2] && board[0] !== 0){
@@ -32,7 +49,13 @@ $(document).ready(function(){
 			} else if(board[6] === board[7] && board[7] === board[8] && board[6] !== 0) {
 				console.log('win3')
 			} else if(board[0] === board[3] && board[3]=== board[6] && board[0] !== 0) {
-				console.log('win4')
+				
+				$('#start').after(winView);
+				
+				displayWinner(0, 'screen-win-two', 'screen-win-one');
+				
+				$('#board').hide();
+			
 			} else if(board[1] === board[4] && board[4] === board[7] && board[1] !== 0) {
 				console.log('win5')
 			} else if(board[2] === board[5] && board[5] === board[8] && board[2] !== 0) {
@@ -119,4 +142,5 @@ $(document).ready(function(){
 			checkWin();
 		}
 	});
-})
+});
+
