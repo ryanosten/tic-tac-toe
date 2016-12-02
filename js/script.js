@@ -3,27 +3,19 @@ $(document).ready(function(){
 	//track state of board. 0 = box has not been claimed by a player. 1 = box claimed by 'o'. 2 = box claimed by 'x'.
 	var board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+	//store variable for winner view to append when someone wins da game
 	var winView = '<div class="screen screen-win" id="finish">';
 		winView +='<header>';
 		winView += '<h1>Tic Tac Toe</h1>';
-		winView += '<p class="message"></p>';
+		winView += '<p class="message">Winner</p>';
 		winView += '<a href="#" class="button">New game</a>';
 		winView += '</header></div>';
 
-		
+	//keep track of player turns. 0 = 'o' and 1 = 'x'
+	var turn = 1;
 
-	//click handler on 'start game' button. If clicked, then start game!
-	$('.screen-start .button').on('click', function(){
-		//hide the start screen
-		$('.screen-start').hide();
-		//remove the 'hide' class on board element to display the game board
-		$('.board').removeClass('hide');
-	});
-
-	
-	//indicate in UI that first turn belongs to player 1
-	$('#player1').addClass('active');
-	
+	//keep track of # of moves made
+	var moves = 0;
 
 	function nextTurn(playerWent, playerGo){
 		//remove classive .active on player who just moved
@@ -37,12 +29,19 @@ $(document).ready(function(){
   		$('#board').hide();
 
   		if(board[boxCheck] === 1){
-  			$('.screen-win').removeClass('screen-win-two');
 			$('.screen-win').addClass('screen-win-one');
-  		} else {
-  			$('.screen-win').removeClass('screen-win-one');
+  		} else if (board[boxCheck] === 2) {
 			$('.screen-win').addClass('screen-win-two');
+  		} else {
+  			$('.screen-win').addClass('screen-win-tie');
+  			$('.message').text("It's a tie!");
+
   		}
+
+  		//click handler for start new game after first game completed
+		$('#finish a.button').on('click', function(){
+			startNextGame();
+		});
   	}
 
 	function checkWin(){
@@ -57,7 +56,7 @@ $(document).ready(function(){
 
 			} else if(board[6] === board[7] && board[7] === board[8] && board[6] !== 0) {
 				
-				whoWon(0);
+				whoWon(6);
 
 			} else if(board[0] === board[3] && board[3]=== board[6] && board[0] !== 0) {
 				
@@ -71,7 +70,7 @@ $(document).ready(function(){
 				
 				whoWon(2);
 
-			}else if(board[0] === board[4] && board[4] === board[8] && board[0] !== 0) {
+			} else if(board[0] === board[4] && board[4] === board[8] && board[0] !== 0) {
 				
 				whoWon(0);
 
@@ -80,16 +79,35 @@ $(document).ready(function(){
 				whoWon(2);
 
 			} else if(moves === 9){
-				console.log('tie') 
+				whoWon(10); 
 			}
 	}
-
-	//keep track of player turns. 0 = 'o' and 1 = 'x'
-	var turn = 1;
-
-	//keep track of # of moves made
-	var moves = 0;
 	
+	function startNextGame(){
+		$('.box').each(function(){
+			$(this).removeClass('box-filled-1 box-filled-2');
+			$(this).removeAttr('style');
+		});
+
+		$('#player1').addClass('active');
+		$('#player2').removeClass('active');
+		$('.screen-win').remove();
+		$('#board').show();
+		board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+		turn = 1;
+		moves = 0;
+	}
+
+	//click handler on 'start game' button. If clicked, then start game!
+	$('.screen-start .button').on('click', function(){
+		//hide the start screen
+		$('.screen-start').hide();
+		//remove the 'hide' class on board element to display the game board
+		$('.board').removeClass('hide');
+	});
+
+	//indicate in UI that first turn belongs to player 1
+	$('#player1').addClass('active');
 	//mouseover handler for boxes
 	$('.box').on('mouseover', function(){
 		
