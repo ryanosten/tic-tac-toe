@@ -10,6 +10,8 @@ $(document).ready(function(){
 		winView += '<a href="#" class="button">New game</a>';
 		winView += '</header></div>';
 
+		
+
 	//click handler on 'start game' button. If clicked, then start game!
 	$('.screen-start .button').on('click', function(){
 		//hide the start screen
@@ -30,40 +32,53 @@ $(document).ready(function(){
 		$(playerGo).addClass('active');
 	}
 
-  	function displayWinner(boxCheck, winX, winO){
+  	function whoWon(boxCheck){
+  		$('#start').after(winView);
+  		$('#board').hide();
+
   		if(board[boxCheck] === 1){
-  			$('.screen-win').removeClass(winX);
-			$('.screen-win').addClass(winO);
+  			$('.screen-win').removeClass('screen-win-two');
+			$('.screen-win').addClass('screen-win-one');
   		} else {
-  			$('.screen-win').removeClass(winO);
-			$('.screen-win').addClass(winX);
+  			$('.screen-win').removeClass('screen-win-one');
+			$('.screen-win').addClass('screen-win-two');
   		}
   	}
 
 	function checkWin(){
 
 			if(board[0] === board[1] && board[1] === board[2] && board[0] !== 0){
-				console.log('win1')
+				
+				whoWon(0);
+				
 			} else if(board[3] === board[4] && board[4] === board[5] && board[3] !== 0) {
-				console.log('win2')
+				
+				whoWon(3);
+
 			} else if(board[6] === board[7] && board[7] === board[8] && board[6] !== 0) {
-				console.log('win3')
+				
+				whoWon(0);
+
 			} else if(board[0] === board[3] && board[3]=== board[6] && board[0] !== 0) {
 				
-				$('#start').after(winView);
-				
-				displayWinner(0, 'screen-win-two', 'screen-win-one');
-				
-				$('#board').hide();
+				whoWon(0);
 			
 			} else if(board[1] === board[4] && board[4] === board[7] && board[1] !== 0) {
-				console.log('win5')
+				
+				whoWon(1);
+
 			} else if(board[2] === board[5] && board[5] === board[8] && board[2] !== 0) {
-				console.log('win6')
+				
+				whoWon(2);
+
 			}else if(board[0] === board[4] && board[4] === board[8] && board[0] !== 0) {
-				console.log('win7')
+				
+				whoWon(0);
+
 			} else if(board[2] === board[4] && board[4] === board[6] && board[2] !== 0) {
-				console.log('win8')
+				
+				whoWon(2);
+
 			} else if(moves === 9){
 				console.log('tie') 
 			}
