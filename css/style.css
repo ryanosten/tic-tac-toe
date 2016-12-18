@@ -111,6 +111,24 @@ h1 {
   #player2.active {
     background: #3688C3; }
 
+.player-names {
+  font-weight: 400;
+  color: grey;
+  font-size: 1.2em;
+  margin-top: 15px;
+  display: inline-block;
+  width: 48%;
+  position: relative;
+}
+
+#playerOneName {
+  left: 3.5%;
+}
+
+#playerTwoName {
+  left: 15%;
+}
+
 .boxes {
   width: 480px;
   margin: 3em auto 0; }
@@ -140,6 +158,12 @@ h1 {
 
 .hide {
   display: none;
+}
+
+.player-name {
+  color: white;
+  font-size: 5.5em;
+  margin-top: 75px;
 }
 
 
