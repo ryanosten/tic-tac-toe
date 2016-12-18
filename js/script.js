@@ -1,6 +1,7 @@
 	$(document).ready(function(){
 	//track state of board. 0 = box has not been claimed by a player. 1 = box claimed by 'o'. 2 = box claimed by 'x'.
 	var board = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+	var boardClone = board;
 
 	//store variable for winner view to append when someone wins da game
 	var winView = '<div class="screen screen-win" id="finish">';
@@ -18,6 +19,7 @@
 	var moves = 0;
 	
 	var aiGame = false;
+	var aiScore = 0;
 	var playerOneName;
 	var playerTwoName;
 
@@ -57,6 +59,35 @@
 		}
 	}
 
+	function getPossibleState(){
+		var scoresList = [];
+
+		for(i = 0; i < boardClone.length; i++){
+			if (boardClone[i] === 0){
+				boardClone[i] = 2;
+				minimax(ai);
+			}
+			
+			if (minimax() !== true){
+				for(j = 0; j < boardClone.length; j++){
+					if(boardClone[j] === 0){
+						boardClone[j] = 1;
+						minimax(human);
+					}
+				}
+			}
+		}
+	}
+
+	function minimax(player){
+		
+		if (checkWin(boardClone) !== false){
+			
+			scoresList.unshift[10];
+			return true;
+		} 
+	}
+
 	function nextTurn(playerWent, playerGo){
 		//remove class .active on player who just moved
 		$(playerWent).removeClass('active');
@@ -81,37 +112,38 @@
 		}
 	};
 
-	function checkWin(){
 
-			if(board[0] === board[1] && board[1] === board[2] && board[0] !== 0){
+	function checkWin(whichBoard){
+
+			if(whichBoard[0] === whichBoard[1] && whichBoard[1] === whichBoard[2] && whichBoard[0] !== 0){
 				
 				whoWon(0);
 				
-			} else if(board[3] === board[4] && board[4] === board[5] && board[3] !== 0) {
+			} else if(whichBoard[3] === whichBoard[4] && whichBoard[4] === whichBoard[5] && whichBoard[3] !== 0) {
 				
 				whoWon(3);
 
-			} else if(board[6] === board[7] && board[7] === board[8] && board[6] !== 0) {
+			} else if(whichBoard[6] === whichBoard[7] && whichBoard[7] === whichBoard[8] && whichBoard[6] !== 0) {
 				
 				whoWon(6);
 
-			} else if(board[0] === board[3] && board[3]=== board[6] && board[0] !== 0) {
+			} else if(whichBoard[0] === whichBoard[3] && whichBoard[3]=== whichBoard[6] && whichBoard[0] !== 0) {
 				
 				whoWon(0);
 			
-			} else if(board[1] === board[4] && board[4] === board[7] && board[1] !== 0) {
+			} else if(whichBoard[1] === whichBoard[4] && whichBoard[4] === whichBoard[7] && whichBoard[1] !== 0) {
 				
 				whoWon(1);
 
-			} else if(board[2] === board[5] && board[5] === board[8] && board[2] !== 0) {
+			} else if(whichBoard[2] === whichBoard[5] && whichBoard[5] === whichBoard[8] && whichBoard[2] !== 0) {
 				
 				whoWon(2);
 
-			} else if(board[0] === board[4] && board[4] === board[8] && board[0] !== 0) {
+			} else if(whichBoard[0] === whichBoard[4] && whichBoard[4] === whichBoard[8] && whichBoard[0] !== 0) {
 				
 				whoWon(0);
 
-			} else if(board[2] === board[4] && board[4] === board[6] && board[2] !== 0) {
+			} else if(whichBoard[2] === whichBoard[4] && whichBoard[4] === whichBoard[6] && whichBoard[2] !== 0) {
 				
 				whoWon(2);
 
@@ -219,7 +251,7 @@
 			moves++;
 
 			//check for a win or tie
-			checkWin();
+			checkWin(board);
 		
 		//if it is 'x' turn, and box not claimed then...
 		} else if(turn === 2 && board[boxClicked] === 0){
@@ -240,7 +272,7 @@
 			moves++;
 
 			//check for a win or tie
-			checkWin();
+			checkWin(board);
 		}
 	});
 });
