@@ -59,21 +59,42 @@
 		}
 	}
 
+	//function to get the index of max value in an array
+	function indexofMax(arr) {
+
+			var max = arr[0];
+			var maxIndex = 0;
+
+			for (var i = 1; i < arr.length; i++){
+				if(arr[i] > max){
+					maxIndex = i;
+					max = arr[i];
+				}
+			}
+
+			return maxIndex;
+		}
+
 	function aiGo(){
 		//get the current boardstate
-		var cloneBoard = [1,0,2,2,0,0,2,1,1];
+		var cloneBoard = [1,1,2,0,2,0,0,0,1];
 		var scores_list = [];
-		var moves = [];
+		var moves_list = [];
 		var currentMove;
-		var max_score, min_score;
-		var max_score_index, min_score_index
 		var playerTurn = 2;
-
 		var stateList =[];
 		var newState;
+
+		//get minimax of cloneBoard
+
+		minimax(cloneBoard)
+
+		function(miniMax){}
+
 		//create an array of possible new board states
 		//var boardStates = [];
 
+		/*
 
 		for(i = 0; i < cloneBoard.length; i++){
 			//create the boardstate
@@ -92,7 +113,7 @@
 				currentMove = [i];
 				
 				//push the move to the moves list
-				moves.push(currentMove);
+				moves_list.push(currentMove);
 				
 				//check if its terminal
 				//minimax(newState, 2);
@@ -112,14 +133,21 @@
 				console.log('110 ran');
 		}
 
+		
+		//loop through the scores_list and get the index of the max value
+		var max_score_index = indexofMax(scores_list);
+		
+		//get the move at the same index as the highest score in scores_list
+		var best_move = moves_list[max_score_index];
+
+		//make the move//
+
+
 		function miniMax(state, player){
-			var playersTurn = player;
-			var local_statelist = [];
-			var local_scores = [];
 
 			console.log('running minimax on ', state);
-			//console.log(player);
 
+			//is state terminal?
 			if (player % 2 === 0 && checkWin(state, true) === true){
 					
 					console.log('x wins, returned 10');
@@ -130,7 +158,20 @@
 					console.log('o wins, returned -10')
 					return -10;
 
+			} else if (state.indexOf(0) === -1){
+					console.log('its a tie')
+					return 0;
+			
+			//if no, generate new moves
 			} else {
+					
+					var playersTurn = player;
+					var local_statelist = [];
+					var local_scores = [];
+					
+					//change playersTurn to player who just went to pass that into minimax
+					playersTurn ++;
+
 					//in this state, game is not over, so let's create new states
 					for(i = 0; i < state.length; i++){
 						console.log("create new states and loop through");
@@ -139,16 +180,16 @@
 						//if space is is empty
 						if (newState[i] === 0){
 							
-							//and if player 2 just went 
-							if(player % 2 === 0){
+							//and if player 1's turn 
+							if(playersTurn % 2 !== 0){
 								//make player 1 move
 								newState[i] = 1;
 							
-							//if player 1 just went
-							} else if (player % 2 !== 0) {
+							//if player 2's turn
+							} else if (playersTurn % 2 === 0) {
 								//make player 2 move
 								newState[i] = 2;
-								//change player state to 2 because two just moved
+								
 							
 							}
 							console.log('newState is ', newState);
@@ -158,8 +199,7 @@
 						}
 					}
 
-					//change playersTurn to player who just went to pass that into minimax
-					playersTurn ++;
+					
 
 					for (j = 0; j < local_statelist.length; j++){
 						console.log('run minimax on new states')
@@ -179,6 +219,7 @@
 		}
 
 	};
+	*/
 
 
 
